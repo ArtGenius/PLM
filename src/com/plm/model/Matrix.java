@@ -47,4 +47,5 @@ public class Matrix {
 	public int getRowsCount() {
 		return linesCount;
 	}
+
 }

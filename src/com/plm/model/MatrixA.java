@@ -10,23 +10,19 @@ public class MatrixA extends Matrix {
 
 	public int getNewVarNumber(Set<Integer> rows, int row2) {
 		int result = 0;
-		for (int i : rows) {
 			for (int j = 0; j < inputsCount; j++) {
-				if (T[i][j] == 0 && T[row2][j] == 1)
+				if (!rows.contains(j)&&T[row2][j]==1)
 					result++;
 			}
-		}
 		return result;
 	}
 
 	public int getGeneralVarNumber(Set<Integer> rows, int row2) {
 		int result = 0;
-		for (int i : rows) {
 			for (int j = 0; j < inputsCount; j++) {
-				if (T[i][j] == 1 && T[row2][j] == 1)
+				if (rows.contains(j)&&T[row2][j]==1)
 					result++;
 			}
-		}
 		return result;
 	}
 

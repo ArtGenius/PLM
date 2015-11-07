@@ -2,6 +2,7 @@ package com.plm.plm_maker;
 
 import java.util.LinkedList;
 
+import com.plm.model.ElementaryMatrix;
 import com.plm.model.Matrix;
 import com.plm.model.PLM;
 
@@ -17,7 +18,7 @@ public class Main {
 		int lines=10;
 		Decompositor decompositor= new Decompositor(table);
 		if(decompositor.canBeUsed(lines, vars, functions)){
-			LinkedList<Matrix> plmList=decompositor.getPLMList(lines,vars);
+			LinkedList<ElementaryMatrix> plmList=decompositor.getPLMList(lines,vars);
 			//TODO print elementary matrixes
 		}
 		else{

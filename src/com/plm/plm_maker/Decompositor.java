@@ -35,11 +35,13 @@ public class Decompositor {
 	public Decompositor(PLM table) {
 		this.table = table;
 		this.A = getMatrixA();
-		rangs = table.getRangs(A.gerMatrix());
+		int i=0;
+		//while(i!=A.getRowsCount())unselectedRows.add(i++);
+		//rangs = A.getRangs(A.gerMatrix());
 	}
 
-	public LinkedList<Matrix> getPLMList(int lines, int variables) {
-		LinkedList<Matrix> solution = new LinkedList<Matrix>();
+	public LinkedList<ElementaryMatrix> getPLMList(int lines, int variables) {
+		LinkedList<ElementaryMatrix> solution = new LinkedList<ElementaryMatrix>();
 		while (true) {
 			if (unselectedRows.size() == 0)
 				return solution;
@@ -57,14 +59,18 @@ public class Decompositor {
 				// 6 count o n
 				LOG.info("count number of new and general variables");
 				HashMap<Integer, ON> on = countON(elementaryMatrix.getVarSet());
+				for(int i:on.keySet())LOG.info(i+") "+on.get(i).o+" "+on.get(i).n);
 				// 7 exclude
 				LOG.info("exclude rows with number of new variables greater than free inputs count");
 				on = excludeRows(on, elementaryMatrix.getFreeInputsCount());
+				for(int i:on.keySet())LOG.info(i+") "+on.get(i).o+" "+on.get(i).n);
 				// 8 next line
-				LOG.info("select next line");
 				int next = selectNext(on);
-				if (next != -1)
+				LOG.info("select next line "+next);
+				if (next != -1){
 					elementaryMatrix.addFunction(A, next);
+					unselectedRows.remove(next);
+				}
 				else
 					break;
 			}
@@ -108,6 +114,7 @@ public class Decompositor {
 			}
 		}
 		unselectedRows.remove(result);
+		LOG.info("first line is "+result);
 		return result;
 	}
 
@@ -124,11 +131,12 @@ public class Decompositor {
 
 	private HashMap<Integer, ON> excludeRows(HashMap<Integer, ON> on,
 			int freeInputs) {
+		HashMap<Integer, ON> result= new HashMap<Integer, ON>();
 		for (int i : on.keySet()) {
-			if (on.get(i).n > freeInputs)
-				on.remove(i);
+			if (on.get(i).n <= freeInputs)
+				result.put(i, on.get(i));
 		}
-		return on;
+		return result;
 	}
 
 	private int selectNext(HashMap<Integer, ON> on) {
@@ -137,7 +145,7 @@ public class Decompositor {
 		if (on.size() == 0)
 			return -1;
 		for (int i : on.keySet()) {
-			if (on.get(i).o > maxO) {
+			if (on.get(i).o >= maxO) {
 				maxO = on.get(i).o;
 				minN = on.get(i).n;
 			}
@@ -157,5 +165,8 @@ public class Decompositor {
 	@Deprecated
 	public void setA(MatrixA m){
 		this.A=m;
+		int i=0;
+		while(i!=A.getRowsCount())unselectedRows.add(i++);
+		rangs = A.getRangs(A.gerMatrix());
 	}
 }
