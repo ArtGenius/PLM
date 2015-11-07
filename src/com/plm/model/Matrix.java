@@ -1,5 +1,8 @@
 package com.plm.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 public class Matrix {
@@ -14,20 +17,22 @@ public class Matrix {
 
 	}
 	
-	public int [] getRangsArray(byte matrix[][]){
-		int [] rangs=new int [linesCount];
-		for (int i = 0; i < rangs.length; i++) {
+	public Map <Integer, Integer> getRangs(byte matrix[][]){
+		Map<Integer, Integer> rangs=new HashMap<Integer, Integer>();
+		for (int i = 0; i < linesCount; i++) {
+			int cnt =0;
 			for (int j = 0; j < inputsCount; j++) {
-				if(matrix[i][j]==1)rangs[i]++;
+				if(matrix[i][j]==1)cnt++;
 			}
+			rangs.put(i, cnt);
 		}
-		//Arrays.sort(rangs);
 		return rangs;
 	}
 	
 	public Matrix(int rows, int columns) {
 		inputsCount = columns;
 		linesCount = rows;
+		T=new byte[rows][columns];
 	}
 
 	public boolean setCell(int currentRow, int currentColl, byte cellValue) {
