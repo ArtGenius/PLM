@@ -19,9 +19,9 @@ public class Matrix {
 	
 	public Map <Integer, Integer> getRangs(byte matrix[][]){
 		Map<Integer, Integer> rangs=new HashMap<Integer, Integer>();
-		for (int i = 0; i < linesCount; i++) {
+		for (int i = 0; i < matrix.length; i++) {
 			int cnt =0;
-			for (int j = 0; j < inputsCount; j++) {
+			for (int j = 0; j < matrix[0].length; j++) {
 				if(matrix[i][j]==1)cnt++;
 			}
 			rangs.put(i, cnt);

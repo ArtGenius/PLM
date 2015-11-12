@@ -20,14 +20,14 @@ public class MethodTests {
 	
 	public static void main(String [] args){	
 		Decompositor decompositor=new Decompositor(new PLM(100, 100, 100));
-		decompositor.setA(givenMatrixA("A.txt"));
-		thenPrintPLM(decompositor.getPLMList(4, 6));
+		decompositor.setA(givenMatrixA("A1.txt"));
+		thenPrintPLM(decompositor.getPLMList(3, 4));
 		//fail("Not yet implemented");
 	}
 
 	private static void thenPrintPLM(LinkedList<ElementaryMatrix> plmList) {
 		for(ElementaryMatrix m:plmList){
-			m.print();
+			//m.print();
 			System.out.println();
 		}
 	}
@@ -35,8 +35,8 @@ public class MethodTests {
 	private static MatrixA givenMatrixA(String fileName){
 		MatrixA m=null;
 		try(BufferedReader in=new BufferedReader(new FileReader(fileName))){
-			m=new MatrixA(10, 15);
-			for (int i = 0; i <10 ; i++) {
+			m=new MatrixA(8, 10);
+			for (int i = 0; i <8 ; i++) {
 				String s=in.readLine();
 				int j=0;
 				for (char c: s.toCharArray()) {

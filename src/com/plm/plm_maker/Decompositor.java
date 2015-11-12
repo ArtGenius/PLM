@@ -36,8 +36,8 @@ public class Decompositor {
 		this.table = table;
 		this.A = getMatrixA();
 		int i=0;
-		//while(i!=A.getRowsCount())unselectedRows.add(i++);
-		//rangs = A.getRangs(A.gerMatrix());
+		while(i!=A.getRowsCount())unselectedRows.add(i++);
+		rangs = A.getRangs(A.gerMatrix());
 	}
 
 	public LinkedList<ElementaryMatrix> getPLMList(int lines, int variables) {
@@ -97,9 +97,12 @@ public class Decompositor {
 	}
 
 	private MatrixA getMatrixA() {
-		// TODO create matrix A. Use table to do this.
 		LOG.info("creating matrix A");
-		return null;
+		MatrixA matrix=new MatrixA(table.getFunctionsCount(), table.getVariablesCount());
+		for (int j = 0; j < matrix.getRowsCount(); j++) {
+			matrix.setRow(j, table.getFunctionRows(j));
+		}
+		return matrix;
 	}
 
 	private int selectFirst() {
@@ -168,5 +171,6 @@ public class Decompositor {
 		int i=0;
 		while(i!=A.getRowsCount())unselectedRows.add(i++);
 		rangs = A.getRangs(A.gerMatrix());
+		//if(!canBeUsed(3, 4, 3))System.out.println("Метод не может быть применен!");
 	}
 }

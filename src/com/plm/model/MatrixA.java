@@ -1,5 +1,6 @@
 package com.plm.model;
 
+import java.util.List;
 import java.util.Set;
 
 public class MatrixA extends Matrix {
@@ -28,5 +29,13 @@ public class MatrixA extends Matrix {
 
 	public byte[][] gerMatrix() {
 		return T;
+	}
+	
+	public void setRow(int row, List<byte[]> rows){
+		for (int i = 0; i < rows.size(); i++) {
+			for (int j = 0; j < inputsCount; j++) {
+				if(rows.get(i)[j]==1)T[row][j]=1;
+			}
+		}
 	}
 }

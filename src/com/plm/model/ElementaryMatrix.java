@@ -4,37 +4,37 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
-public class ElementaryMatrix extends Matrix{
+public class ElementaryMatrix extends Matrix {
 
 	private int freeInputsCount;
 	private int freeOutputsCount;
-	private HashMap<Integer,Integer> varSet;
+	private HashMap<Integer, Integer> varSet;
 	private LinkedHashSet<Integer> functionsSet;
-	
+
 	public ElementaryMatrix(int rows, int columns) {
 		super(rows, columns);
-		freeInputsCount=columns;
-		freeOutputsCount=rows;
-		varSet=new HashMap<Integer,Integer>();
-		functionsSet=new LinkedHashSet<Integer>();
+		freeInputsCount = columns;
+		freeOutputsCount = rows;
+		varSet = new HashMap<Integer, Integer>();
+		functionsSet = new LinkedHashSet<Integer>();
 	}
 
-	public void addFunction(MatrixA matrixA, int line){
-		byte b [][]=matrixA.gerMatrix();
+	public void addFunction(MatrixA matrixA, int line) {
+		byte b[][] = matrixA.gerMatrix();
 		functionsSet.add(line);
 		for (int j = 0; j < matrixA.getColumnsCount(); j++) {
-			if(b[line][j]==1){
-				if(!varSet.containsKey(j)){
-					varSet.put(j,inputsCount-freeInputsCount);
+			if (b[line][j] == 1) {
+				if (!varSet.containsKey(j)) {
+					varSet.put(j, inputsCount - freeInputsCount);
 					freeInputsCount--;
 				}
-				T[linesCount-freeOutputsCount][varSet.get(j)]=1;
+				T[linesCount - freeOutputsCount][varSet.get(j)] = 1;
 			}
 		}
 		freeOutputsCount--;
 		log.info(varSet);
 	}
-	
+
 	public HashSet<Integer> getFunctionsSet() {
 		return functionsSet;
 	}
@@ -53,14 +53,29 @@ public class ElementaryMatrix extends Matrix{
 	}
 
 	public void print() {
-		for(int i:functionsSet)System.out.print(i);
-		System.out.println(varSet);
+		System.out.print(" \t");
+		for (int var : this.getVarSet()) {
+			System.out.print(var + "\t");
+		}
+		System.out.print("|");
+		for (int func : this.getFunctionsSet()) {
+			System.out.print(func + "\t");
+		}
+		System.out.print("\n");
 		for (int i = 0; i < linesCount; i++) {
+			System.out.print(i + "\t");
 			for (int j = 0; j < inputsCount; j++) {
-				System.out.print(T[i][j]);
+				System.out.print(T[i][j] + "\t");
+			}
+			System.out.print("|");
+			for (int j = 0; j < getFunctionsSet().size(); j++) {
+				if (i == j)
+					System.out.print("1\t");
+				else
+					System.out.print("0\t");
 			}
 			System.out.print("\n");
 		}
 	}
-	
+
 }
